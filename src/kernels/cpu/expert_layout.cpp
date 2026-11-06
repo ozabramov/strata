@@ -42,6 +42,8 @@ int cpu_isa_cap() {
 #if !defined(__x86_64__) && !defined(__i386__) && !defined(_M_X64) && !defined(_M_IX86)
 bool cpu_avx512_ok() { return false; }
 bool cpu_avx512bw_ok() { return false; }
+bool cpu_q2_avx512bw_ok() { return false; }
+bool q2_avx512bw_enabled() { return false; }
 bool cpu_avx2_ok() { return false; }
 bool cpu_avx1_ok() { return false; }
 bool cpu_sse42_ok() { return false; }
@@ -138,6 +140,30 @@ bool cpu_avx512bw_ok() {
         return ((ebx >> 16) & 1u) && ((ebx >> 17) & 1u) && ((ebx >> 30) & 1u) && ((ebx >> 31) & 1u);
     }();
     return ok;
+}
+
+bool cpu_q2_avx512bw_ok() {
+    static const bool ok = [] {
+        if (!cpu_avx512bw_ok() || cpu_isa_cap() < 3) return false;
+        unsigned r[4] = {0, 0, 0, 0};
+#if defined(_MSC_VER)
+        int x[4];
+        __cpuidex(x, 7, 0);
+        for (int i = 0; i < 4; ++i) r[i] = (unsigned) x[i];
+#else
+        __cpuid_count(7, 0, r[0], r[1], r[2], r[3]);
+#endif
+        return ((r[2] >> 11) & 1u) != 0;   // AVX512-VNNI (cpu_avx512bw_ok: F, DQ, BW, VL and the OS state)
+    }();
+    return ok;
+}
+
+bool q2_avx512bw_enabled() {
+    static const bool on = [] {
+        const char* v = std::getenv("STRATA_CPU_512BW");
+        return v != nullptr && v[0] == '1' && !cpu_avx512_ok() && cpu_q2_avx512bw_ok();
+    }();
+    return on;
 }
 
 bool cpu_avx2_ok() {
@@ -402,6 +428,7 @@ void cpu_require_expert_support() {
 void q2_rows_any(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt, float* const* out,
                  int r0, int r1) {
     if (cpu_avx512_ok()) q2_0_gguf_rows_multi(w, row_bytes, nblocks, a, nt, out, r0, r1);
+    else if (q2_avx512bw_enabled()) q2_0_gguf_rows_multi_avx512bw(w, row_bytes, nblocks, a, nt, out, r0, r1);
     else if (cpu_avx2_ok()) q2_0_gguf_rows_multi_avx2(w, row_bytes, nblocks, a, nt, out, r0, r1);
     else q2_0_gguf_rows_multi_avx1(w, row_bytes, nblocks, a, nt, out, r0, r1);   // issue #1699: the third rung
 }
@@ -409,12 +436,14 @@ void q2_rows_any(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* co
 void q2_rows_any_legacy(const uint8_t* w, size_t row_bytes, int nblocks, const ActQ* const* a, int nt, float* const* out,
                         int r0, int r1) {
     if (cpu_avx512_ok()) q2_0_gguf_rows_multi(w, row_bytes, nblocks, a, nt, out, r0, r1);
+    else if (q2_avx512bw_enabled()) q2_0_gguf_rows_multi_avx512bw(w, row_bytes, nblocks, a, nt, out, r0, r1);
     else if (cpu_avx2_ok()) q2_0_gguf_rows_multi_avx2_legacy(w, row_bytes, nblocks, a, nt, out, r0, r1);
     else q2_0_gguf_rows_multi_avx1_legacy(w, row_bytes, nblocks, a, nt, out, r0, r1);
 }
 
 void act_quant_any(const float* x, int n, ActQ& a) {
     if (cpu_avx512_ok()) act_quant_q8_1(x, n, a);
+    else if (q2_avx512bw_enabled()) act_quant_q8_1_avx512bw(x, n, a);
     else if (cpu_avx2_ok()) act_quant_q8_1_avx2(x, n, a);
     else act_quant_q8_1_avx1(x, n, a);   // issue #1699
 }

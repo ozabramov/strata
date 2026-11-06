@@ -2006,7 +2006,8 @@ endif()
 
 if(STRATA_CPU_X86)
   add_library(strata_kernels_cpu STATIC src/kernels/cpu/expert.cpp src/kernels/cpu/pool.cpp
-              src/kernels/cpu/expert_layout.cpp src/kernels/cpu/q2_avx2.cpp src/kernels/cpu/hadamard.cpp)
+              src/kernels/cpu/expert_layout.cpp src/kernels/cpu/q2_avx2.cpp src/kernels/cpu/q2_avx512bw.cpp
+              src/kernels/cpu/hadamard.cpp)
 else()
   add_library(strata_kernels_cpu STATIC src/kernels/cpu/portable.cpp src/kernels/cpu/pool.cpp
               src/kernels/cpu/expert_layout.cpp src/kernels/cpu/hadamard.cpp)
@@ -2017,11 +2018,15 @@ target_include_directories(strata_kernels_cpu PUBLIC include)
 if(MSVC)
   set_source_files_properties(src/kernels/cpu/expert.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX512")
   set_source_files_properties(src/kernels/cpu/q2_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+  set_source_files_properties(src/kernels/cpu/q2_avx512bw.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX512")
 else()
   # GCC/Clang spell it differently, and `-mavx512vnni` alone is not enough: VBMI is a separate feature bit.
   set_source_files_properties(src/kernels/cpu/expert.cpp
                               PROPERTIES COMPILE_OPTIONS "-mavx512f;-mavx512bw;-mavx512vl;-mavx512dq;-mavx512vnni;-mavx512vbmi;-mf16c;-mfma")
   set_source_files_properties(src/kernels/cpu/q2_avx2.cpp PROPERTIES COMPILE_OPTIONS "-mavx2;-mfma;-mf16c")
+  # Cascade Lake: expert.cpp's Q2_0 rows without VBMI (q2_avx512_kernels.inl), so nothing in it needs Ice Lake
+  set_source_files_properties(src/kernels/cpu/q2_avx512bw.cpp
+                              PROPERTIES COMPILE_OPTIONS "-mavx512f;-mavx512bw;-mavx512vl;-mavx512dq;-mavx512vnni;-mf16c;-mfma")
 endif()
 # AVX-VNNI (Alder Lake, Sapphire Rapids and later): the AVX-2 expert kernels' vpdpwssd / vpdpbusd copies (q2_avx2.cpp,
 # iq_avx2.cpp; *_rows.inl), taken at run time where cpu_avxvnni_ok().  GCC and Clang compile only those functions with
