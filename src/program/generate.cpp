@@ -4791,6 +4791,9 @@ int main(int argc, char** argv) {
                             ? "AVX1 128-bit (iq_avx1, the older-CPU build)"
                             : "ggml-cpu vec_dot (no AVX2: the older-CPU build)")
                      : std::getenv("STRATA_NO_IQ256") == nullptr ? "AVX-2" : "ggml-cpu vec_dot (STRATA_NO_IQ256 set)");
+    if (strata::kernels::cpu::q2_avx512bw_enabled())   // after the line above: it names what the other rows run on
+        std::fprintf(stderr, "strata generate: STRATA_CPU_512BW=1: the Q2_0 expert rows run on AVX-512 without VBMI "
+                             "(this CPU has AVX-512 F/BW/VL/DQ/VNNI)\n");
     // the compiled shape; a native model's file replaces it below with its own metadata (read_geometry), which a
     // pruned variant (GSQ-RCO Coder, fewer than 512 experts) differs from
     strata::core::ModelGeometry g;

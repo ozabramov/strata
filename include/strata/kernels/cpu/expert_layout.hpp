@@ -46,6 +46,13 @@ struct ExpertLayout {
 bool cpu_avx512_ok();
 /// Whether this CPU runs AVX-512F + AVX-512BW + AVX-512VL + AVX-512DQ (e.g. Skylake-X i9-9920X) for iq_avx512.cpp.
 bool cpu_avx512bw_ok();
+/// cpu_avx512bw_ok() and AVX512-VNNI: the 512-bit Q2_0 rows without VBMI (q2_avx512bw.cpp) run here (Cascade Lake:
+/// Xeon Scalable 2nd gen, Core i9-10900X; and every CPU where cpu_avx512_ok() holds).
+bool cpu_q2_avx512bw_ok();
+/// STRATA_CPU_512BW=1 (read once) on a CPU where cpu_q2_avx512bw_ok() holds and cpu_avx512_ok() does not:
+/// q2_rows_any and act_quant_any take the 512-bit kernels without VBMI instead of the AVX-2 ones.  Opt-in: the
+/// rows sum in the AVX-512 kernel's order, not the AVX-2 one's (last-bit differences, so greedy answers can change).
+bool q2_avx512bw_enabled();
 /// Whether this CPU (and its OS) runs the AVX2 kernels (AVX, AVX2, FMA, F16C): the floor of every expert kernel
 /// (q2_avx2.cpp, iq_avx2.cpp, and ggml-cpu in the portable build).  STRATA_FORCE_AVX2 does not change it.
 bool cpu_avx2_ok();

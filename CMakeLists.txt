@@ -2006,7 +2006,8 @@ endif()
 
 if(STRATA_CPU_X86)
   add_library(strata_kernels_cpu STATIC src/kernels/cpu/expert.cpp src/kernels/cpu/pool.cpp
-              src/kernels/cpu/expert_layout.cpp src/kernels/cpu/q2_avx2.cpp src/kernels/cpu/hadamard.cpp)
+              src/kernels/cpu/expert_layout.cpp src/kernels/cpu/q2_avx2.cpp src/kernels/cpu/q2_avx512bw.cpp
+              src/kernels/cpu/hadamard.cpp)
 else()
   add_library(strata_kernels_cpu STATIC src/kernels/cpu/portable.cpp src/kernels/cpu/pool.cpp
               src/kernels/cpu/expert_layout.cpp src/kernels/cpu/hadamard.cpp)
@@ -2017,11 +2018,15 @@ target_include_directories(strata_kernels_cpu PUBLIC include)
 if(MSVC)
   set_source_files_properties(src/kernels/cpu/expert.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX512")
   set_source_files_properties(src/kernels/cpu/q2_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+  set_source_files_properties(src/kernels/cpu/q2_avx512bw.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX512")
 else()
   # GCC/Clang spell it differently, and `-mavx512vnni` alone is not enough: VBMI is a separate feature bit.
   set_source_files_properties(src/kernels/cpu/expert.cpp
                               PROPERTIES COMPILE_OPTIONS "-mavx512f;-mavx512bw;-mavx512vl;-mavx512dq;-mavx512vnni;-mavx512vbmi;-mf16c;-mfma")
   set_source_files_properties(src/kernels/cpu/q2_avx2.cpp PROPERTIES COMPILE_OPTIONS "-mavx2;-mfma;-mf16c")
+  # Cascade Lake: expert.cpp's Q2_0 rows without VBMI (q2_avx512_kernels.inl), so nothing in it needs Ice Lake
+  set_source_files_properties(src/kernels/cpu/q2_avx512bw.cpp
+                              PROPERTIES COMPILE_OPTIONS "-mavx512f;-mavx512bw;-mavx512vl;-mavx512dq;-mavx512vnni;-mf16c;-mfma")
 endif()
 # AVX-VNNI (Alder Lake, Sapphire Rapids and later): the AVX-2 expert kernels' vpdpwssd / vpdpbusd copies (q2_avx2.cpp,
 # iq_avx2.cpp; *_rows.inl), taken at run time where cpu_avxvnni_ok().  GCC and Clang compile only those functions with
@@ -2799,6 +2804,12 @@ if(STRATA_BUILD_TESTS)
     target_link_libraries(q2_bitplane_parity PRIVATE strata_kernels_cpu)
     add_test(NAME q2_bitplane_parity COMMAND q2_bitplane_parity)
     set_tests_properties(q2_bitplane_parity PROPERTIES ENVIRONMENT "STRATA_Q2_BITPLANE=1")
+    # the opt-in 512-bit Q2_0 rows for AVX-512 CPUs without VBMI (Cascade Lake; STRATA_CPU_512BW=1): bitwise the VBMI
+    # kernel where the CPU has VBMI, a few ulps from AVX-2 everywhere, bitwise alone/window/row ranges; and the dispatch
+    add_executable(q2_avx512bw_parity src/kernels/cpu/q2_avx512bw_parity.cpp)
+    target_link_libraries(q2_avx512bw_parity PRIVATE strata_kernels_cpu)
+    add_test(NAME q2_avx512bw_parity COMMAND q2_avx512bw_parity)
+    add_test(NAME q2_avx512bw_parity_on COMMAND ${CMAKE_COMMAND} -E env STRATA_CPU_512BW=1 $<TARGET_FILE:q2_avx512bw_parity>)
   endif()
 
   if(STRATA_NATIVE_EXPERTS)

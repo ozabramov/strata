@@ -101,6 +101,10 @@ void q2_0_gguf_rows_multi(const uint8_t*, size_t, int, const ActQ* const*, int, 
 void q2_0_gguf_rows_multi_avx2(const uint8_t*, size_t, int, const ActQ* const*, int, float* const*, int, int) {
     unsupported("the Q2_0 GGUF row kernel");
 }
+void q2_0_gguf_rows_multi_avx512bw(const uint8_t*, size_t, int, const ActQ* const*, int, float* const*, int, int) {
+    unsupported("the Q2_0 GGUF row kernel");
+}
+void act_quant_q8_1_avx512bw(const float* x, int n, ActQ& a) { act_quant_q8_1(x, n, a); }
 bool q2_bitplane_enabled() { return false; }
 void q2_0_gguf_rows_multi_avx2_legacy(const uint8_t*, size_t, int, const ActQ* const*, int, float* const*, int, int) {
     unsupported("the Q2_0 GGUF row kernel");
