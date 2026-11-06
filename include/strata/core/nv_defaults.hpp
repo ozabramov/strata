@@ -1,4 +1,4 @@
-// strata/core/nv_defaults.hpp - the per-architecture defaults of switches that are exact (bitwise) on NVIDIA sm_86 and sm_60.
+// strata/core/nv_defaults.hpp - the per-architecture defaults of switches that are exact (bitwise) on NVIDIA sm_86, sm_60 and sm_75.
 //
 // 148-nv measured every switch of the 0.1.45 bit-exact ON set, one at a time and in the stacked set, on an RTX 3060, an RTX A4000
 // (sm_86) and a Tesla P100 (sm_60): a switch is in a table only when its token ids equal the default's and it was faster on that
@@ -11,6 +11,9 @@
 //   STRATA_SM121_PERF=0  turns the sm_121 table off (GB10: NVIDIA DGX Spark; new in 0.2.7.1, also off under STRATA_DEFAULTS=026).  Its
 //                        switches are measured speed settings, not bit-exact ones: the fused prompt kernels and the FP4-activation NVFP4
 //                        prompt round differently from the paths they replace (24 of 24 greedy answers identical; no KL run yet).
+//   STRATA_SM75_PERF=0   turns the sm_75 table off (Turing: RTX 20, Quadro RTX, Tesla T4 / T10; also off under STRATA_DEFAULTS=026).
+//                        The table is the whole bitwise kernel series of sm75_series.hpp (STRATA_SM75_PERF=1), first measured on a
+//                        Tesla T4; each kernel's own variable still wins over it.
 //
 // A switch the user set (to anything, including 0) is never overridden.  Applied once at start, before any engine code reads its
 // switches; the table is used only when every visible CUDA device has the same compute capability.
@@ -27,6 +30,16 @@ namespace strata::core {
 std::vector<std::pair<std::string, std::string>> nv_default_env(int major, int minor);
 /// The same with the answer of STRATA_DEFAULTS=026 given (the sm_121 table is empty then), so a test can check both without the environment.
 std::vector<std::pair<std::string, std::string>> nv_default_env(int major, int minor, bool defaults026);
+
+/// What the line apply_nv_defaults prints says about a card's table: the card, the variable whose 0 turns the table off, whether
+/// its switches are bit-exact, and whether STRATA_DEFAULTS=026 also turns it off.  Only meaningful for a card that has a table.
+struct NvTableNote {
+    const char* card;
+    const char* off_switch;
+    bool exact;
+    bool off_by_026;
+};
+NvTableNote nv_table_note(int major, int minor);
 
 /// Sets `nv_default_env(major, minor)` in this process's environment where the user has not set the variable, prints one line to
 /// stderr when it set anything, and returns the names it set.
