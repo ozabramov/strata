@@ -73,6 +73,15 @@ class DropOneArms(unittest.TestCase):
         with self.assertRaises(ValueError):
             SA.select_switches(["STRATA_NOT_A_SWITCH"])
 
+    def test_an_unknown_switch_on_the_command_line_is_a_usage_error(self):
+        import contextlib
+        import io
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err), self.assertRaises(SystemExit) as cm:
+            SA.main(["cfg.json", "--only", "BOGUS", "--dry-run"])
+        self.assertEqual(cm.exception.code, 2)
+        self.assertIn("STRATA_BOGUS", err.getvalue())
+
     def test_selects_by_short_or_full_name(self):
         self.assertEqual(SA.select_switches(["QIL", "STRATA_TC_SM75"]), ["STRATA_QIL", "STRATA_TC_SM75"])
         self.assertEqual(SA.select_switches([]), list(SA.SM75_SWITCHES))
