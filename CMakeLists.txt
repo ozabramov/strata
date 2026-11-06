@@ -2799,6 +2799,12 @@ if(STRATA_BUILD_TESTS)
     target_link_libraries(q2_bitplane_parity PRIVATE strata_kernels_cpu)
     add_test(NAME q2_bitplane_parity COMMAND q2_bitplane_parity)
     set_tests_properties(q2_bitplane_parity PROPERTIES ENVIRONMENT "STRATA_Q2_BITPLANE=1")
+    # the opt-in 512-bit Q2_0 rows for AVX-512 CPUs without VBMI (Cascade Lake; STRATA_CPU_512BW=1): bitwise the VBMI
+    # kernel where the CPU has VBMI, a few ulps from AVX-2 everywhere, bitwise alone/window/row ranges; and the dispatch
+    add_executable(q2_avx512bw_parity src/kernels/cpu/q2_avx512bw_parity.cpp)
+    target_link_libraries(q2_avx512bw_parity PRIVATE strata_kernels_cpu)
+    add_test(NAME q2_avx512bw_parity COMMAND q2_avx512bw_parity)
+    add_test(NAME q2_avx512bw_parity_on COMMAND ${CMAKE_COMMAND} -E env STRATA_CPU_512BW=1 $<TARGET_FILE:q2_avx512bw_parity>)
   endif()
 
   if(STRATA_NATIVE_EXPERTS)
