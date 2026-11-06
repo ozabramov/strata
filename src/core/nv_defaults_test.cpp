@@ -1,5 +1,5 @@
-// src/core/nv_defaults_test.cpp - the NVIDIA per-architecture default tables (no GPU needed): the sm_121 (GB10, DGX Spark) table, its
-// two off switches, and that no other card's table changed.
+// src/core/nv_defaults_test.cpp - the NVIDIA per-architecture default tables (no GPU needed): the sm_121 (GB10, DGX Spark) and sm_75
+// (Turing) tables, their off switches, and that no other card's table changed.
 #include "strata/core/nv_chunk.hpp"
 #include "strata/core/nv_defaults.hpp"
 
@@ -59,7 +59,33 @@ int main() {
     CHECK(nv_default_env(12, 0, false).empty());
     CHECK(nv_default_env(10, 0, false).empty());
     CHECK(nv_default_env(8, 9, false).empty());
-    CHECK(nv_default_env(7, 5, false).empty());
+    // Turing (7.5: RTX 20, Quadro RTX, Tesla T4 / T10): the whole bitwise kernel series of sm75_series.hpp
+    {
+        unset("STRATA_SM75_PERF");
+        const auto t = nv_default_env(7, 5, false);
+        CHECK(t.size() == 1);
+        CHECK(find(t, "STRATA_SM75_PERF") && *find(t, "STRATA_SM75_PERF") == "1");
+        CHECK(nv_default_env(7, 5, true).empty());           // STRATA_DEFAULTS=026: the table is newer than 0.2.6
+        put("STRATA_SM75_PERF", "0");
+        CHECK(nv_default_env(7, 5, false).empty());          // its off switch
+        put("STRATA_SM75_PERF", "1");
+        CHECK(nv_default_env(7, 5, false).size() == 1);      // =1 is what the table sets; apply_nv_defaults keeps the user's own
+        unset("STRATA_SM75_PERF");
+        CHECK(nv_default_env(7, 0, false).empty());          // Volta and Turing share major 7
+        CHECK(nv_default_env(7, 2, false).empty());
+        CHECK(nv_default_env(6, 1, false).empty());
+    }
+    // the line apply_nv_defaults prints names the card, its off switch, and whether the switches are exact
+    {
+        const NvTableNote t = nv_table_note(7, 5);
+        CHECK(std::string(t.card) == "sm_75 (Turing)" && std::string(t.off_switch) == "STRATA_SM75_PERF" && t.exact && t.off_by_026);
+        const NvTableNote a = nv_table_note(8, 6);
+        CHECK(std::string(a.card) == "sm_86 (Ampere)" && std::string(a.off_switch) == "STRATA_SM86_PERF" && a.exact && !a.off_by_026);
+        const NvTableNote p = nv_table_note(6, 0);
+        CHECK(std::string(p.card) == "sm_60 (Pascal)" && std::string(p.off_switch) == "STRATA_SM60_PERF" && p.exact && !p.off_by_026);
+        const NvTableNote g = nv_table_note(12, 1);
+        CHECK(std::string(g.card) == "sm_121 (GB10)" && std::string(g.off_switch) == "STRATA_SM121_PERF" && !g.exact && g.off_by_026);
+    }
     {
         const auto a = nv_default_env(8, 6, false), b = nv_default_env(8, 6, true);
         CHECK(!a.empty() && a == b);               // STRATA_DEFAULTS=026 does not touch the 2026-10 sm_86 table
@@ -96,6 +122,7 @@ int main() {
     // the one-argument form reads STRATA_DEFAULTS
     put("STRATA_DEFAULTS", "026");
     CHECK(nv_default_env(12, 1).empty());
+    CHECK(nv_default_env(7, 5).empty());
     unset("STRATA_DEFAULTS");
     if (fails == 0) std::printf("nv_defaults_test: ok\n");
     return fails == 0 ? 0 : 1;
