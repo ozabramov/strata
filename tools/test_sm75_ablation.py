@@ -33,8 +33,8 @@ class SwitchList(unittest.TestCase):
     def test_matches_the_documented_series(self):
         # docs/DETAILS.md lists the bitwise Turing switches that STRATA_SM75_PERF=1 turns on.
         details = (ROOT / "docs" / "DETAILS.md").read_text(encoding="utf-8")
-        section = details.split("### RTX 20 (Turing, sm_75) kernels (opt-in)", 1)[1].split("Options that change answers", 1)[0]
-        documented = sorted(set(re.findall(r"`(STRATA_[A-Z0-9_]+)", section)) - {SA.SERIES})
+        section = details.split("### RTX 20 and Tesla T4 (Turing, sm_75) kernels", 1)[1].split("Options that change answers", 1)[0]
+        documented = sorted(set(re.findall(r"`(STRATA_[A-Z0-9_]+)", section)) - {SA.SERIES, "STRATA_DEFAULTS"})
         self.assertEqual(sorted(SA.SM75_SWITCHES), documented)
 
     def test_no_answer_changing_option_is_in_the_bitwise_list(self):

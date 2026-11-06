@@ -1,0 +1,93 @@
+round 0 stock: ready in 19 s
+  chat0  decode 41.5 tok/s  prompt 49.0 tok/s (34)  n 256
+  chat1  decode 31.1 tok/s  prompt 40.4 tok/s (27)  n 231
+  chat2  decode 27.0 tok/s  prompt 39.7 tok/s (29)  n 184
+  long   decode 27.2 tok/s  prompt 516.5 tok/s (6345)  n 106
+round 0 all: ready in 28 s
+  chat0  decode 56.2 tok/s  prompt 41.7 tok/s (34)  n 256
+  chat1  decode 38.4 tok/s  prompt 37.6 tok/s (27)  n 237
+  chat2  decode 36.3 tok/s  prompt 37.8 tok/s (29)  n 174
+  long   decode 32.3 tok/s  prompt 484.5 tok/s (6345)  n 122
+round 1 all: ready in 28 s
+  chat0  decode 53.7 tok/s  prompt 41.1 tok/s (34)  n 256
+  chat1  decode 37.6 tok/s  prompt 37.5 tok/s (27)  n 232
+  chat2  decode 34.3 tok/s  prompt 37.9 tok/s (29)  n 200
+  long   decode 33.0 tok/s  prompt 447.5 tok/s (6345)  n 153
+round 1 stock: ready in 28 s
+  chat0  decode 39.1 tok/s  prompt 38.6 tok/s (34)  n 256
+  chat1  decode 29.5 tok/s  prompt 34.2 tok/s (27)  n 202
+  chat2  decode 27.6 tok/s  prompt 35.4 tok/s (29)  n 184
+  long   decode 26.1 tok/s  prompt 419.5 tok/s (6345)  n 114
+round 2 stock: ready in 22 s
+  chat0  decode 37.7 tok/s  prompt 45.2 tok/s (34)  n 256
+  chat1  decode 27.4 tok/s  prompt 38.0 tok/s (27)  n 231
+  chat2  decode 25.9 tok/s  prompt 37.2 tok/s (29)  n 208
+  long   decode 25.4 tok/s  prompt 429.0 tok/s (6345)  n 119
+round 2 all: ready in 28 s
+  chat0  decode 48.5 tok/s  prompt 39.3 tok/s (34)  n 256
+  chat1  decode 35.1 tok/s  prompt 35.0 tok/s (27)  n 224
+  chat2  decode 36.7 tok/s  prompt 36.5 tok/s (29)  n 200
+  long   decode 32.3 tok/s  prompt 447.0 tok/s (6345)  n 113
+round 3 all: ready in 28 s
+  chat0  decode 48.7 tok/s  prompt 40.3 tok/s (34)  n 256
+  chat1  decode 35.2 tok/s  prompt 36.5 tok/s (27)  n 224
+  chat2  decode 36.3 tok/s  prompt 38.7 tok/s (29)  n 200
+  long   decode 32.9 tok/s  prompt 446.0 tok/s (6345)  n 124
+round 3 stock: ready in 28 s
+  chat0  decode 39.6 tok/s  prompt 37.9 tok/s (34)  n 256
+  chat1  decode 29.8 tok/s  prompt 34.2 tok/s (27)  n 202
+  chat2  decode 28.1 tok/s  prompt 36.4 tok/s (29)  n 184
+  long   decode 27.1 tok/s  prompt 425.0 tok/s (6345)  n 126
+round 4 stock: ready in 28 s
+  chat0  decode 40.3 tok/s  prompt 38.1 tok/s (34)  n 256
+  chat1  decode 29.7 tok/s  prompt 35.5 tok/s (27)  n 237
+  chat2  decode 30.3 tok/s  prompt 35.8 tok/s (29)  n 209
+  long   decode 26.5 tok/s  prompt 426.5 tok/s (6345)  n 112
+round 4 all: ready in 22 s
+  chat0  decode 46.5 tok/s  prompt 47.0 tok/s (34)  n 256
+  chat1  decode 32.6 tok/s  prompt 40.8 tok/s (27)  n 202
+  chat2  decode 29.6 tok/s  prompt 38.8 tok/s (29)  n 184
+  long   decode 27.1 tok/s  prompt 448.6 tok/s (6345)  n 116
+round 5 all: ready in 19 s
+  chat0  decode 46.7 tok/s  prompt 47.1 tok/s (34)  n 256
+  chat1  decode 31.3 tok/s  prompt 40.3 tok/s (27)  n 219
+  chat2  decode 29.4 tok/s  prompt 38.7 tok/s (29)  n 184
+  long   decode 28.8 tok/s  prompt 447.6 tok/s (6345)  n 153
+round 5 stock: ready in 28 s
+  chat0  decode 42.9 tok/s  prompt 39.4 tok/s (34)  n 256
+  chat1  decode 29.7 tok/s  prompt 35.7 tok/s (27)  n 231
+  chat2  decode 28.3 tok/s  prompt 35.8 tok/s (29)  n 184
+  long   decode 28.8 tok/s  prompt 429.8 tok/s (6345)  n 150
+round 6 stock: ready in 22 s
+  chat0  decode 38.4 tok/s  prompt 45.9 tok/s (34)  n 256
+  chat1  decode 28.0 tok/s  prompt 39.4 tok/s (27)  n 231
+  chat2  decode 26.9 tok/s  prompt 38.6 tok/s (29)  n 203
+  long   decode 24.4 tok/s  prompt 431.3 tok/s (6345)  n 138
+round 6 all: ready in 28 s
+  chat0  decode 48.7 tok/s  prompt 39.8 tok/s (34)  n 256
+  chat1  decode 36.4 tok/s  prompt 36.6 tok/s (27)  n 237
+  chat2  decode 35.5 tok/s  prompt 38.9 tok/s (29)  n 174
+  long   decode 34.5 tok/s  prompt 448.7 tok/s (6345)  n 155
+round 7 all: ready in 28 s
+  chat0  decode 48.2 tok/s  prompt 38.9 tok/s (34)  n 256
+  chat1  decode 35.4 tok/s  prompt 34.7 tok/s (27)  n 219
+  chat2  decode 34.3 tok/s  prompt 36.9 tok/s (29)  n 176
+  long   decode 31.5 tok/s  prompt 444.9 tok/s (6345)  n 118
+round 7 stock: ready in 28 s
+  chat0  decode 40.1 tok/s  prompt 38.4 tok/s (34)  n 256
+  chat1  decode 28.6 tok/s  prompt 34.0 tok/s (27)  n 224
+  chat2  decode 29.8 tok/s  prompt 36.3 tok/s (29)  n 200
+  long   decode 26.7 tok/s  prompt 425.2 tok/s (6345)  n 113
+
+medians over rounds:
+  chat0  | stock: decode   39.9  prompt    39.0 | all: decode   48.6  prompt    40.7
+  chat1  | stock: decode   29.6  prompt    35.6 | all: decode   35.3  prompt    37.0
+  chat2  | stock: decode   27.9  prompt    36.3 | all: decode   34.9  prompt    38.3
+  long   | stock: decode   26.6  prompt   427.8 | all: decode   32.3  prompt   447.6
+
+answers (greedy, every round):
+  chat0  | IDENTICAL
+  chat1  | unstable: stock, all
+  chat2  | unstable: stock, all
+  long   | unstable: stock, all
+EXIT=0

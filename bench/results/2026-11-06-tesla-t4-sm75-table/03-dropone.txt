@@ -1,0 +1,253 @@
+round 0 stock: ready in 31 s
+  chat0  decode 47.8 tok/s  prompt 63.9 tok/s (34)  n 256
+  chat1  decode 34.1 tok/s  prompt 71.3 tok/s (27)  n 237
+  chat2  decode 32.2 tok/s  prompt 69.1 tok/s (29)  n 175
+  long   decode 29.3 tok/s  prompt 445.1 tok/s (6345)  n 107
+round 0 all: ready in 19 s
+  chat0  decode 49.2 tok/s  prompt 63.4 tok/s (34)  n 256
+  chat1  decode 38.9 tok/s  prompt 65.1 tok/s (27)  n 237
+  chat2  decode 36.2 tok/s  prompt 69.9 tok/s (29)  n 175
+  long   decode 30.8 tok/s  prompt 441.5 tok/s (6345)  n 107
+round 0 drop_SM75_IL: ready in 19 s
+  chat0  decode 42.4 tok/s  prompt 62.0 tok/s (34)  n 256
+  chat1  decode 33.1 tok/s  prompt 65.6 tok/s (27)  n 237
+  chat2  decode 31.0 tok/s  prompt 66.6 tok/s (29)  n 175
+  long   decode 27.7 tok/s  prompt 451.4 tok/s (6345)  n 107
+round 0 drop_SM75_EXP: ready in 31 s
+  chat0  decode 57.4 tok/s  prompt 65.6 tok/s (34)  n 256
+  chat1  decode 40.6 tok/s  prompt 73.2 tok/s (27)  n 237
+  chat2  decode 38.4 tok/s  prompt 72.7 tok/s (29)  n 175
+  long   decode 35.6 tok/s  prompt 462.2 tok/s (6345)  n 107
+round 0 drop_GR_UP75: ready in 31 s
+  chat0  decode 55.7 tok/s  prompt 63.3 tok/s (34)  n 256
+  chat1  decode 40.1 tok/s  prompt 71.5 tok/s (27)  n 237
+  chat2  decode 38.0 tok/s  prompt 71.6 tok/s (29)  n 175
+  long   decode 36.7 tok/s  prompt 456.2 tok/s (6345)  n 107
+round 0 drop_GR_DOWN_TG: ready in 19 s
+  chat0  decode 55.1 tok/s  prompt 66.3 tok/s (34)  n 256
+  chat1  decode 38.4 tok/s  prompt 71.4 tok/s (27)  n 237
+  chat2  decode 34.8 tok/s  prompt 68.3 tok/s (29)  n 175
+  long   decode 30.4 tok/s  prompt 452.7 tok/s (6345)  n 107
+round 0 drop_SCORES_HALVE: ready in 31 s
+  chat0  decode 56.3 tok/s  prompt 67.4 tok/s (34)  n 256
+  chat1  decode 41.2 tok/s  prompt 72.7 tok/s (27)  n 237
+  chat2  decode 38.4 tok/s  prompt 72.5 tok/s (29)  n 175
+  long   decode 34.2 tok/s  prompt 455.0 tok/s (6345)  n 107
+round 0 drop_TOPK_SPLIT: ready in 28 s
+  chat0  decode 57.0 tok/s  prompt 67.5 tok/s (34)  n 256
+  chat1  decode 40.1 tok/s  prompt 71.9 tok/s (27)  n 237
+  chat2  decode 38.6 tok/s  prompt 71.7 tok/s (29)  n 175
+  long   decode 34.8 tok/s  prompt 454.2 tok/s (6345)  n 107
+round 0 drop_TOPK_SAMPLE: ready in 28 s
+  chat0  decode 55.8 tok/s  prompt 64.3 tok/s (34)  n 256
+  chat1  decode 40.6 tok/s  prompt 73.4 tok/s (27)  n 237
+  chat2  decode 38.3 tok/s  prompt 72.9 tok/s (29)  n 175
+  long   decode 34.5 tok/s  prompt 453.7 tok/s (6345)  n 107
+round 0 drop_ATTN_V3: ready in 28 s
+  chat0  decode 55.4 tok/s  prompt 63.4 tok/s (34)  n 256
+  chat1  decode 40.9 tok/s  prompt 71.5 tok/s (27)  n 237
+  chat2  decode 38.1 tok/s  prompt 72.0 tok/s (29)  n 175
+  long   decode 33.4 tok/s  prompt 452.9 tok/s (6345)  n 107
+round 0 drop_Q2_WARP: ready in 28 s
+  chat0  decode 55.2 tok/s  prompt 63.2 tok/s (34)  n 256
+  chat1  decode 40.9 tok/s  prompt 72.0 tok/s (27)  n 237
+  chat2  decode 37.8 tok/s  prompt 72.1 tok/s (29)  n 175
+  long   decode 34.6 tok/s  prompt 454.0 tok/s (6345)  n 107
+round 0 drop_FUSE_WAIT: ready in 28 s
+  chat0  decode 57.4 tok/s  prompt 66.0 tok/s (34)  n 256
+  chat1  decode 40.0 tok/s  prompt 70.1 tok/s (27)  n 237
+  chat2  decode 38.2 tok/s  prompt 72.0 tok/s (29)  n 175
+  long   decode 34.5 tok/s  prompt 454.4 tok/s (6345)  n 107
+round 0 drop_QIL: ready in 28 s
+  chat0  decode 55.3 tok/s  prompt 63.9 tok/s (34)  n 256
+  chat1  decode 40.8 tok/s  prompt 72.9 tok/s (27)  n 237
+  chat2  decode 37.5 tok/s  prompt 73.0 tok/s (29)  n 175
+  long   decode 34.9 tok/s  prompt 454.3 tok/s (6345)  n 107
+round 0 drop_TC_SM75: ready in 19 s
+  chat0  decode 54.7 tok/s  prompt 65.2 tok/s (34)  n 256
+  chat1  decode 38.7 tok/s  prompt 69.9 tok/s (27)  n 237
+  chat2  decode 35.6 tok/s  prompt 67.6 tok/s (29)  n 175
+  long   decode 30.9 tok/s  prompt 451.5 tok/s (6345)  n 107
+round 0 drop_PA_V1_PREFETCH: ready in 19 s
+  chat0  decode 54.7 tok/s  prompt 66.1 tok/s (34)  n 256
+  chat1  decode 38.7 tok/s  prompt 70.1 tok/s (27)  n 237
+  chat2  decode 35.9 tok/s  prompt 69.2 tok/s (29)  n 175
+  long   decode 32.0 tok/s  prompt 450.2 tok/s (6345)  n 107
+round 0 drop_SCORES_THREAD: ready in 19 s
+  chat0  decode 49.6 tok/s  prompt 64.4 tok/s (34)  n 256
+  chat1  decode 37.7 tok/s  prompt 66.1 tok/s (27)  n 237
+  chat2  decode 36.1 tok/s  prompt 66.3 tok/s (29)  n 175
+  long   decode 30.6 tok/s  prompt 457.9 tok/s (6345)  n 107
+round 1 drop_SCORES_THREAD: ready in 28 s
+  chat0  decode 56.1 tok/s  prompt 64.2 tok/s (34)  n 256
+  chat1  decode 41.6 tok/s  prompt 73.3 tok/s (27)  n 237
+  chat2  decode 38.8 tok/s  prompt 73.7 tok/s (29)  n 175
+  long   decode 35.1 tok/s  prompt 458.7 tok/s (6345)  n 107
+round 1 drop_PA_V1_PREFETCH: ready in 28 s
+  chat0  decode 55.6 tok/s  prompt 64.2 tok/s (34)  n 256
+  chat1  decode 40.5 tok/s  prompt 73.2 tok/s (27)  n 237
+  chat2  decode 38.5 tok/s  prompt 73.0 tok/s (29)  n 175
+  long   decode 34.6 tok/s  prompt 446.1 tok/s (6345)  n 107
+round 1 drop_TC_SM75: ready in 19 s
+  chat0  decode 51.1 tok/s  prompt 64.3 tok/s (34)  n 256
+  chat1  decode 37.4 tok/s  prompt 68.6 tok/s (27)  n 237
+  chat2  decode 36.4 tok/s  prompt 67.2 tok/s (29)  n 175
+  long   decode 31.1 tok/s  prompt 453.4 tok/s (6345)  n 107
+round 1 drop_QIL: ready in 31 s
+  chat0  decode 57.0 tok/s  prompt 65.8 tok/s (34)  n 256
+  chat1  decode 40.0 tok/s  prompt 70.3 tok/s (27)  n 237
+  chat2  decode 38.1 tok/s  prompt 72.5 tok/s (29)  n 175
+  long   decode 34.5 tok/s  prompt 455.2 tok/s (6345)  n 107
+round 1 drop_FUSE_WAIT: ready in 28 s
+  chat0  decode 55.5 tok/s  prompt 65.7 tok/s (34)  n 256
+  chat1  decode 41.3 tok/s  prompt 71.4 tok/s (27)  n 237
+  chat2  decode 38.5 tok/s  prompt 73.5 tok/s (29)  n 175
+  long   decode 34.5 tok/s  prompt 454.2 tok/s (6345)  n 107
+round 1 drop_Q2_WARP: ready in 19 s
+  chat0  decode 48.4 tok/s  prompt 63.1 tok/s (34)  n 256
+  chat1  decode 37.8 tok/s  prompt 65.8 tok/s (27)  n 237
+  chat2  decode 35.9 tok/s  prompt 70.1 tok/s (29)  n 175
+  long   decode 32.1 tok/s  prompt 453.6 tok/s (6345)  n 107
+round 1 drop_ATTN_V3: ready in 28 s
+  chat0  decode 55.5 tok/s  prompt 66.3 tok/s (34)  n 256
+  chat1  decode 40.4 tok/s  prompt 72.7 tok/s (27)  n 237
+  chat2  decode 38.5 tok/s  prompt 72.9 tok/s (29)  n 175
+  long   decode 36.0 tok/s  prompt 455.9 tok/s (6345)  n 107
+round 1 drop_TOPK_SAMPLE: ready in 19 s
+  chat0  decode 50.6 tok/s  prompt 64.9 tok/s (34)  n 256
+  chat1  decode 40.1 tok/s  prompt 69.1 tok/s (27)  n 237
+  chat2  decode 37.4 tok/s  prompt 71.6 tok/s (29)  n 175
+  long   decode 31.7 tok/s  prompt 456.3 tok/s (6345)  n 107
+round 1 drop_TOPK_SPLIT: ready in 28 s
+  chat0  decode 56.3 tok/s  prompt 65.0 tok/s (34)  n 256
+  chat1  decode 40.7 tok/s  prompt 73.2 tok/s (27)  n 237
+  chat2  decode 38.8 tok/s  prompt 72.8 tok/s (29)  n 175
+  long   decode 35.1 tok/s  prompt 458.4 tok/s (6345)  n 107
+round 1 drop_SCORES_HALVE: ready in 19 s
+  chat0  decode 48.1 tok/s  prompt 63.3 tok/s (34)  n 256
+  chat1  decode 36.3 tok/s  prompt 64.8 tok/s (27)  n 237
+  chat2  decode 35.5 tok/s  prompt 65.2 tok/s (29)  n 175
+  long   decode 29.3 tok/s  prompt 456.4 tok/s (6345)  n 107
+round 1 drop_GR_DOWN_TG: ready in 28 s
+  chat0  decode 55.0 tok/s  prompt 64.4 tok/s (34)  n 256
+  chat1  decode 40.3 tok/s  prompt 74.0 tok/s (27)  n 237
+  chat2  decode 38.5 tok/s  prompt 73.4 tok/s (29)  n 175
+  long   decode 34.3 tok/s  prompt 458.4 tok/s (6345)  n 107
+round 1 drop_GR_UP75: ready in 19 s
+  chat0  decode 53.9 tok/s  prompt 65.3 tok/s (34)  n 256
+  chat1  decode 37.8 tok/s  prompt 68.1 tok/s (27)  n 237
+  chat2  decode 35.0 tok/s  prompt 66.4 tok/s (29)  n 175
+  long   decode 28.7 tok/s  prompt 456.8 tok/s (6345)  n 107
+round 1 drop_SM75_EXP: ready in 19 s
+  chat0  decode 49.1 tok/s  prompt 63.6 tok/s (34)  n 256
+  chat1  decode 39.4 tok/s  prompt 68.7 tok/s (27)  n 237
+  chat2  decode 36.7 tok/s  prompt 71.0 tok/s (29)  n 175
+  long   decode 31.1 tok/s  prompt 457.8 tok/s (6345)  n 107
+round 1 drop_SM75_IL: ready in 28 s
+  chat0  decode 46.9 tok/s  prompt 61.8 tok/s (34)  n 256
+  chat1  decode 34.3 tok/s  prompt 70.1 tok/s (27)  n 237
+  chat2  decode 32.6 tok/s  prompt 69.2 tok/s (29)  n 175
+  long   decode 29.9 tok/s  prompt 455.8 tok/s (6345)  n 107
+round 1 all: ready in 28 s
+  chat0  decode 56.7 tok/s  prompt 66.2 tok/s (34)  n 256
+  chat1  decode 40.8 tok/s  prompt 69.2 tok/s (27)  n 237
+  chat2  decode 38.4 tok/s  prompt 73.0 tok/s (29)  n 175
+  long   decode 34.6 tok/s  prompt 456.4 tok/s (6345)  n 107
+round 1 stock: ready in 19 s
+  chat0  decode 43.7 tok/s  prompt 62.9 tok/s (34)  n 256
+  chat1  decode 31.8 tok/s  prompt 65.6 tok/s (27)  n 237
+  chat2  decode 29.1 tok/s  prompt 64.4 tok/s (29)  n 175
+  long   decode 25.9 tok/s  prompt 438.1 tok/s (6345)  n 107
+round 2 stock: ready in 19 s
+  chat0  decode 39.2 tok/s  prompt 61.1 tok/s (34)  n 256
+  chat1  decode 30.9 tok/s  prompt 60.1 tok/s (27)  n 237
+  chat2  decode 29.6 tok/s  prompt 63.5 tok/s (29)  n 175
+  long   decode 25.4 tok/s  prompt 443.5 tok/s (6345)  n 107
+round 2 all: ready in 28 s
+  chat0  decode 51.9 tok/s  prompt 64.0 tok/s (34)  n 256
+  chat1  decode 41.1 tok/s  prompt 71.7 tok/s (27)  n 237
+  chat2  decode 38.3 tok/s  prompt 73.1 tok/s (29)  n 175
+  long   decode 32.8 tok/s  prompt 462.0 tok/s (6345)  n 107
+round 2 drop_SM75_IL: ready in 22 s
+  chat0  decode 45.0 tok/s  prompt 64.2 tok/s (34)  n 256
+  chat1  decode 32.5 tok/s  prompt 66.1 tok/s (27)  n 237
+  chat2  decode 30.1 tok/s  prompt 63.9 tok/s (29)  n 175
+  long   decode 25.2 tok/s  prompt 456.3 tok/s (6345)  n 107
+round 2 drop_SM75_EXP: ready in 19 s
+  chat0  decode 50.9 tok/s  prompt 62.9 tok/s (34)  n 256
+  chat1  decode 39.5 tok/s  prompt 68.8 tok/s (27)  n 237
+  chat2  decode 37.1 tok/s  prompt 71.7 tok/s (29)  n 175
+  long   decode 31.7 tok/s  prompt 462.5 tok/s (6345)  n 107
+round 2 drop_GR_UP75: ready in 28 s
+  chat0  decode 57.3 tok/s  prompt 65.6 tok/s (34)  n 256
+  chat1  decode 38.7 tok/s  prompt 70.2 tok/s (27)  n 237
+  chat2  decode 36.3 tok/s  prompt 67.2 tok/s (29)  n 175
+  long   decode 32.2 tok/s  prompt 460.7 tok/s (6345)  n 107
+round 2 drop_GR_DOWN_TG: ready in 28 s
+  chat0  decode 57.4 tok/s  prompt 67.2 tok/s (34)  n 256
+  chat1  decode 38.3 tok/s  prompt 71.4 tok/s (27)  n 237
+  chat2  decode 36.6 tok/s  prompt 67.7 tok/s (29)  n 175
+  long   decode 32.1 tok/s  prompt 458.3 tok/s (6345)  n 107
+round 2 drop_SCORES_HALVE: ready in 28 s
+  chat0  decode 59.4 tok/s  prompt 67.6 tok/s (34)  n 256
+  chat1  decode 39.7 tok/s  prompt 72.0 tok/s (27)  n 237
+  chat2  decode 36.1 tok/s  prompt 69.2 tok/s (29)  n 175
+  long   decode 34.4 tok/s  prompt 453.3 tok/s (6345)  n 107
+round 2 drop_TOPK_SPLIT: ready in 28 s
+  chat0  decode 51.3 tok/s  prompt 64.2 tok/s (34)  n 256
+  chat1  decode 40.7 tok/s  prompt 71.2 tok/s (27)  n 237
+  chat2  decode 37.8 tok/s  prompt 71.5 tok/s (29)  n 175
+  long   decode 33.1 tok/s  prompt 455.2 tok/s (6345)  n 107
+round 2 drop_TOPK_SAMPLE: ready in 19 s
+  chat0  decode 50.8 tok/s  prompt 64.8 tok/s (34)  n 256
+  chat1  decode 39.9 tok/s  prompt 68.5 tok/s (27)  n 237
+  chat2  decode 37.1 tok/s  prompt 71.4 tok/s (29)  n 175
+  long   decode 31.7 tok/s  prompt 455.0 tok/s (6345)  n 107
+round 2 drop_ATTN_V3: ready in 19 s
+  chat0  decode 54.8 tok/s  prompt 66.2 tok/s (34)  n 256
+  chat1  decode 38.9 tok/s  prompt 70.1 tok/s (27)  n 237
+  chat2  decode 35.9 tok/s  prompt 68.5 tok/s (29)  n 175
+  long   decode 30.4 tok/s  prompt 459.1 tok/s (6345)  n 107
+round 2 drop_Q2_WARP: ready in 19 s
+  chat0  decode 57.1 tok/s  prompt 67.0 tok/s (34)  n 256
+  chat1  decode 38.1 tok/s  prompt 70.4 tok/s (27)  n 237
+  chat2  decode 35.3 tok/s  prompt 69.1 tok/s (29)  n 175
+  long   decode 29.9 tok/s  prompt 460.2 tok/s (6345)  n 107
+round 2 drop_FUSE_WAIT: ready in 28 s
+  chat0  decode 50.3 tok/s  prompt 62.6 tok/s (34)  n 256
+  chat1  decode 40.8 tok/s  prompt 71.0 tok/s (27)  n 237
+  chat2  decode 38.2 tok/s  prompt 72.8 tok/s (29)  n 175
+  long   decode 32.0 tok/s  prompt 460.6 tok/s (6345)  n 107
+round 2 drop_QIL: ready in 28 s
+  chat0  decode 54.0 tok/s  prompt 65.2 tok/s (34)  n 256
+  chat1  decode 39.5 tok/s  prompt 70.0 tok/s (27)  n 237
+  chat2  decode 37.4 tok/s  prompt 70.0 tok/s (29)  n 175
+  long   decode 32.2 tok/s  prompt 455.5 tok/s (6345)  n 107
+round 2 drop_TC_SM75: ready in 28 s
+  chat0  decode 51.0 tok/s  prompt 63.7 tok/s (34)  n 256
+  chat1  decode 40.7 tok/s  prompt 71.0 tok/s (27)  n 237
+  chat2  decode 38.1 tok/s  prompt 73.0 tok/s (29)  n 175
+  long   decode 31.9 tok/s  prompt 454.4 tok/s (6345)  n 107
+round 2 drop_PA_V1_PREFETCH: ready in 28 s
+  chat0  decode 51.2 tok/s  prompt 63.1 tok/s (34)  n 256
+  chat1  decode 40.5 tok/s  prompt 70.3 tok/s (27)  n 237
+  chat2  decode 38.1 tok/s  prompt 72.1 tok/s (29)  n 175
+  long   decode 32.2 tok/s  prompt 442.4 tok/s (6345)  n 107
+round 2 drop_SCORES_THREAD: ready in 28 s
+  chat0  decode 50.8 tok/s  prompt 62.8 tok/s (34)  n 256
+  chat1  decode 40.3 tok/s  prompt 70.2 tok/s (27)  n 237
+  chat2  decode 38.4 tok/s  prompt 72.8 tok/s (29)  n 175
+  long   decode 33.3 tok/s  prompt 484.5 tok/s (6345)  n 107
+
+medians over rounds:
+  chat0  | stock: decode   43.7  prompt    62.9 | all: decode   51.9  prompt    64.0 | drop_SM75_IL: decode   45.0  prompt    62.0 | drop_SM75_EXP: decode   50.9  prompt    63.6 | drop_GR_UP75: decode   55.7  prompt    65.3 | drop_GR_DOWN_TG: decode   55.1  prompt    66.3 | drop_SCORES_HALVE: decode   56.3  prompt    67.4 | drop_TOPK_SPLIT: decode   56.3  prompt    65.0 | drop_TOPK_SAMPLE: decode   50.8  prompt    64.8 | drop_ATTN_V3: decode   55.4  prompt    66.2 | drop_Q2_WARP: decode   55.2  prompt    63.2 | drop_FUSE_WAIT: decode   55.5  prompt    65.7 | drop_QIL: decode   55.3  prompt    65.2 | drop_TC_SM75: decode   51.1  prompt    64.3 | drop_PA_V1_PREFETCH: decode   54.7  prompt    64.2 | drop_SCORES_THREAD: decode   50.8  prompt    64.2
+  chat1  | stock: decode   31.8  prompt    65.6 | all: decode   40.8  prompt    69.2 | drop_SM75_IL: decode   33.1  prompt    66.1 | drop_SM75_EXP: decode   39.5  prompt    68.8 | drop_GR_UP75: decode   38.7  prompt    70.2 | drop_GR_DOWN_TG: decode   38.4  prompt    71.4 | drop_SCORES_HALVE: decode   39.7  prompt    72.0 | drop_TOPK_SPLIT: decode   40.7  prompt    71.9 | drop_TOPK_SAMPLE: decode   40.1  prompt    69.1 | drop_ATTN_V3: decode   40.4  prompt    71.5 | drop_Q2_WARP: decode   38.1  prompt    70.4 | drop_FUSE_WAIT: decode   40.8  prompt    71.0 | drop_QIL: decode   40.0  prompt    70.3 | drop_TC_SM75: decode   38.7  prompt    69.9 | drop_PA_V1_PREFETCH: decode   40.5  prompt    70.3 | drop_SCORES_THREAD: decode   40.3  prompt    70.2
+  chat2  | stock: decode   29.6  prompt    64.4 | all: decode   38.3  prompt    73.0 | drop_SM75_IL: decode   31.0  prompt    66.6 | drop_SM75_EXP: decode   37.1  prompt    71.7 | drop_GR_UP75: decode   36.3  prompt    67.2 | drop_GR_DOWN_TG: decode   36.6  prompt    68.3 | drop_SCORES_HALVE: decode   36.1  prompt    69.2 | drop_TOPK_SPLIT: decode   38.6  prompt    71.7 | drop_TOPK_SAMPLE: decode   37.4  prompt    71.6 | drop_ATTN_V3: decode   38.1  prompt    72.0 | drop_Q2_WARP: decode   35.9  prompt    70.1 | drop_FUSE_WAIT: decode   38.2  prompt    72.8 | drop_QIL: decode   37.5  prompt    72.5 | drop_TC_SM75: decode   36.4  prompt    67.6 | drop_PA_V1_PREFETCH: decode   38.1  prompt    72.1 | drop_SCORES_THREAD: decode   38.4  prompt    72.8
+  long   | stock: decode   25.9  prompt   443.5 | all: decode   32.8  prompt   456.4 | drop_SM75_IL: decode   27.7  prompt   455.8 | drop_SM75_EXP: decode   31.7  prompt   462.2 | drop_GR_UP75: decode   32.2  prompt   456.8 | drop_GR_DOWN_TG: decode   32.1  prompt   458.3 | drop_SCORES_HALVE: decode   34.2  prompt   455.0 | drop_TOPK_SPLIT: decode   34.8  prompt   455.2 | drop_TOPK_SAMPLE: decode   31.7  prompt   455.0 | drop_ATTN_V3: decode   33.4  prompt   455.9 | drop_Q2_WARP: decode   32.1  prompt   454.0 | drop_FUSE_WAIT: decode   34.5  prompt   454.4 | drop_QIL: decode   34.5  prompt   455.2 | drop_TC_SM75: decode   31.1  prompt   453.4 | drop_PA_V1_PREFETCH: decode   32.2  prompt   446.1 | drop_SCORES_THREAD: decode   33.3  prompt   458.7
+
+answers (greedy, every round):
+  chat0  | IDENTICAL
+  chat1  | IDENTICAL
+  chat2  | IDENTICAL
+  long   | IDENTICAL
+EXIT=0

@@ -1,0 +1,18 @@
+rounds seen: [0, 1, 2]; decode median vs `all` (negative = dropping it costs speed)
+arm                      chat0   chat1   chat2    long    mean   prompt6K  answers  n
+stock                   -15.8%  -22.1%  -22.7%  -21.0%   -20.4%    -2.8%   same  3
+all                      +0.0%   +0.0%   +0.0%   +0.0%    +0.0%    +0.0%   same  3
+drop_SM75_IL            -13.3%  -18.9%  -19.1%  -15.5%   -16.7%    -0.1%   same  3
+drop_SM75_EXP            -1.9%   -3.2%   -3.1%   -3.4%    -2.9%    +1.3%   same  3
+drop_GR_UP75             +7.3%   -5.1%   -5.2%   -1.8%    -1.2%    +0.1%   same  3
+drop_GR_DOWN_TG          +6.2%   -5.9%   -4.4%   -2.1%    -1.6%    +0.4%   same  3
+drop_SCORES_HALVE        +8.5%   -2.7%   -5.7%   +4.3%    +1.1%    -0.3%   same  3
+drop_TOPK_SPLIT          +8.5%   -0.2%   +0.8%   +6.1%    +3.8%    -0.3%   same  3
+drop_TOPK_SAMPLE         -2.1%   -1.7%   -2.3%   -3.4%    -2.4%    -0.3%   same  3
+drop_ATTN_V3             +6.7%   -1.0%   -0.5%   +1.8%    +1.8%    -0.1%   same  3
+drop_Q2_WARP             +6.4%   -6.6%   -6.3%   -2.1%    -2.2%    -0.5%   same  3
+drop_FUSE_WAIT           +6.9%   +0.0%   -0.3%   +5.2%    +3.0%    -0.4%   same  3
+drop_QIL                 +6.6%   -2.0%   -2.1%   +5.2%    +1.9%    -0.3%   same  3
+drop_TC_SM75             -1.5%   -5.1%   -5.0%   -5.2%    -4.2%    -0.7%   same  3
+drop_PA_V1_PREFETCH      +5.4%   -0.7%   -0.5%   -1.8%    +0.6%    -2.3%   same  3
+drop_SCORES_THREAD       -2.1%   -1.2%   +0.3%   +1.5%    -0.4%    +0.5%   same  3
