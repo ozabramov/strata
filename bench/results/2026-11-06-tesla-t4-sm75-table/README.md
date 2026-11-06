@@ -43,6 +43,7 @@ answer's SHA-256 is logged and compared.
 | 2 | `02-identity.*`, `02-gpu.csv` | deterministic | `stock`, `all` | 2 |
 | 3 | `03-dropone.*`, `03-gpu.csv` | deterministic | `stock`, `all`, `drop_<NAME>` for each of 14 switches (`tools/sm75_ablation.py`) | 3 |
 | 4 | `04-confirm-default.*`, `04-gpu.csv` | setup's config | `stock`, `all` | 8 |
+| 5 | `05-table-e2e.*`, `05-start-line.txt` | setup's config | the engine with the sm_75 table and no switch set, and the same with `STRATA_SM75_PERF=0` | 2 |
 
 The deterministic lane is the one `docs/DETAILS.md` gives for byte-identical repeats: `STRATA_IQ_MT_MIN=1` and the engine
 arguments `--prompt-cache 0 --adapt-swaps 0 --pcie-frac 0`. In setup's config greedy answers can change between rounds of the
@@ -60,6 +61,9 @@ Run 4, setup's config, `all` / `stock` decode per pair:
 | long (6,345-token prompt) | 1.201 | 1.000 - 1.414 | 7/8 | 26.6 -> 32.3 tok/s |
 
 The 6K prompt read: 427.8 -> 447.6 tok/s (paired median 1.044).
+
+Run 5, the engine built from this branch: with nothing set it prints the sm_75 table's start line (`05-start-line.txt`) and
+decodes 50.5 / 38.5 / 38.1 / 36.0 tok/s against 40.5 / 30.9 / 29.9 / 28.0 with `STRATA_SM75_PERF=0`, which prints no such line.
 
 Run 2, deterministic lane: decode 41.6 -> 48.7, 31.9 -> 36.8, 30.6 -> 35.9, 25.8 -> 29.9 tok/s; all four requests `IDENTICAL`.
 
