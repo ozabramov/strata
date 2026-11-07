@@ -25,7 +25,7 @@ unchanged. Numbers are the reporters' own, on one machine each, unless the text 
 | Tesla P100 | 6.0 | the CUDA 12 engine | `__dp4a` emulated (bit-exact); BF16 projections through fp32; seven scheduling switches on by default ([below](#tesla-p100-sm_60)); opt-in `STRATA_Q8_SM60=1` ([below](#pascal-gp100-a-q8_0-decode-kernel-opt-in)) |
 | Tesla P40 / P4, GTX 10 series | 6.1 | the CUDA 12 engine | BF16 projections through fp32 (cuBLAS has no BF16 GEMM there); dense weights dequantized by a wide kernel; expert mode 8 and its own interleaved-matvec table; opt-in `STRATA_DENSE_F32=1` ([below](#tesla-p40-sm_61-what-was-measured-and-changed)) |
 | Tesla V100, Titan V | 7.0 | the CUDA 12 engine | BF16 projections on the FP16 tensor cores; prompt attention on `mma.m8n8k4`; a leaner attention kernel. See [NVIDIA_V100.md](NVIDIA_V100.md) |
-| RTX 20 (Turing) | 7.5 | **supported**, the ready-made engine | opt-in `STRATA_BF16_TC=1` runs the BF16 projections on the FP16 tensor cores |
+| RTX 20 (Turing) | 7.5 | **supported**, the ready-made engine | the bitwise Turing kernel series on by default (`STRATA_SM75_PERF=0` turns it off, [below](#quadro-rtx-8000-and-other-turing-cards)); opt-in `STRATA_BF16_TC=1` runs the BF16 projections on the FP16 tensor cores |
 
 A card needs enough VRAM to be useful. 12 GB or more is recommended, as for every card. A 2 GB GT 1030 is compute capability 6.1
 too and cannot hold any of the model.
@@ -149,7 +149,7 @@ On a Tesla P100 the engine turns on seven switches that change only how the work
 same: `STRATA_ADAPT_NOWAIT=1`, `STRATA_ADAPT_LAG=2`, `STRATA_SIDE_MIXER=2`, `STRATA_FUSE_WAIT=2`, `STRATA_B6_MMVQ_ROWS=1`,
 `STRATA_FUSE_DECODE=1` and `STRATA_GR_UP75=1`. `STRATA_SM60_PERF=0` turns the whole set off, and a switch you set yourself, to
 any value, is kept. The set is used when every visible card has compute capability 6.0. The full list and per-switch results are
-in [DETAILS.md](DETAILS.md#rtx-30-series-sm_86-and-tesla-p100-sm_60-bitwise-decode-switches-on-by-default).
+in [DETAILS.md](DETAILS.md#rtx-30-series-sm_86-tesla-p100-sm_60-and-turing-sm_75-bitwise-decode-switches-on-by-default).
 
 ## Pascal GP100: a Q8_0 decode kernel (opt-in)
 
@@ -282,8 +282,12 @@ Profiling switches: `STRATA_PREFILL_TIMING=1`, `STRATA_DECODE_TIMING=1`, `STRATA
 
 ## Quadro RTX 8000 and other Turing cards
 
-Turing (sm_75) has FP16 tensor cores but no native BF16 or TF32 tensor cores. Two existing, opt-in switches are worth comparing
-on your own workload:
+Turing (sm_75) has FP16 tensor cores but no native BF16 or TF32 tensor cores. When every card is a 7.5 (RTX 20, Quadro RTX,
+Tesla T4 / T10), the engine turns on the bitwise Turing kernel series (`STRATA_SM75_PERF=1`): answers stay the same bit for bit,
+and decode was 20-27% faster on a Tesla T4 ([numbers](../bench/results/2026-11-06-tesla-t4-sm75-table/README.md)).
+`STRATA_SM75_PERF=0` turns it off; with a card of another kind beside the Turing card, set `STRATA_SM75_PERF=1` yourself.
+
+Two existing, opt-in switches that change rounding are worth comparing on your own workload:
 
 - `STRATA_BF16_TC=1` converts BF16 projection operands to FP16 and uses FP16 tensor cores with FP32 accumulation. Default on sm_75
   is off; `=0` restores the cuBLAS BF16 path. Values outside FP16 range clamp to +-65504, and differently ordered sums can round

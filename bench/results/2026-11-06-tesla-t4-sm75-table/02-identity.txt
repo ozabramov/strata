@@ -1,0 +1,33 @@
+round 0 stock: ready in 19 s
+  chat0  decode 40.9 tok/s  prompt 63.3 tok/s (34)  n 256
+  chat1  decode 31.3 tok/s  prompt 63.6 tok/s (27)  n 237
+  chat2  decode 30.5 tok/s  prompt 62.6 tok/s (29)  n 175
+  long   decode 25.8 tok/s  prompt 450.0 tok/s (6345)  n 107
+round 0 all: ready in 19 s
+  chat0  decode 48.3 tok/s  prompt 63.6 tok/s (34)  n 256
+  chat1  decode 36.6 tok/s  prompt 64.6 tok/s (27)  n 237
+  chat2  decode 35.7 tok/s  prompt 65.1 tok/s (29)  n 175
+  long   decode 29.9 tok/s  prompt 451.7 tok/s (6345)  n 107
+round 1 all: ready in 19 s
+  chat0  decode 49.1 tok/s  prompt 64.1 tok/s (34)  n 256
+  chat1  decode 37.0 tok/s  prompt 64.5 tok/s (27)  n 237
+  chat2  decode 36.1 tok/s  prompt 65.5 tok/s (29)  n 175
+  long   decode 29.9 tok/s  prompt 455.9 tok/s (6345)  n 107
+round 1 stock: ready in 19 s
+  chat0  decode 42.3 tok/s  prompt 60.9 tok/s (34)  n 256
+  chat1  decode 32.4 tok/s  prompt 66.9 tok/s (27)  n 237
+  chat2  decode 30.6 tok/s  prompt 66.0 tok/s (29)  n 175
+  long   decode 25.8 tok/s  prompt 443.6 tok/s (6345)  n 107
+
+medians over rounds:
+  chat0  | stock: decode   41.6  prompt    62.1 | all: decode   48.7  prompt    63.8
+  chat1  | stock: decode   31.9  prompt    65.2 | all: decode   36.8  prompt    64.5
+  chat2  | stock: decode   30.6  prompt    64.3 | all: decode   35.9  prompt    65.3
+  long   | stock: decode   25.8  prompt   446.8 | all: decode   29.9  prompt   453.8
+
+answers (greedy, every round):
+  chat0  | IDENTICAL
+  chat1  | IDENTICAL
+  chat2  | IDENTICAL
+  long   | IDENTICAL
+EXIT=0

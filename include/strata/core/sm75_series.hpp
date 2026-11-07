@@ -1,10 +1,13 @@
 // strata/core/sm75_series.hpp - the Turing (RTX 20, compute capability 7.5) kernel series: one opt-in switch.
 //
 // The Turing kernels of PRs #2069-#2072, #2081, #2091-#2093, #2145-#2146, #2220-#2223, #1821 were measured on one RTX
-// 2080 Ti (and a CMP 50HX) and are bitwise equal to the kernels they replace.  We have no sm_75 card to confirm them, so
-// they are ON ONLY WHEN ASKED FOR:
+// 2080 Ti (and a CMP 50HX) and are bitwise equal to the kernels they replace.  They were opt-in until a Tesla T4 confirmed
+// them (byte-identical answers, decode faster); since then the sm_75 table of nv_defaults.cpp sets STRATA_SM75_PERF=1
+// when every visible card is a 7.5 and the user did not set it:
 //
-//   STRATA_SM75_PERF=1   turns on every bitwise Turing kernel of the series on a compute capability 7.5 card.
+//   STRATA_SM75_PERF=1   turns on every bitwise Turing kernel of the series on a compute capability 7.5 card (the default
+//                        when every card is a 7.5; set it yourself beside a card of another kind)
+//   STRATA_SM75_PERF=0   turns the series off (as does STRATA_DEFAULTS=026)
 //
 // Each kernel keeps the author's own switch, which wins over STRATA_SM75_PERF in both directions (=0 off, =1 on, on any
 // card where the PR said so for tests).  Nothing here changes a card that is not a 7.5: the check is the card's compute

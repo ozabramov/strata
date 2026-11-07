@@ -79,12 +79,30 @@ std::vector<std::pair<std::string, std::string>> nv_default_env(int major, int m
             // It only changes which drafts are attempted, and every draft is verified, so the answers cannot drift.
             {"STRATA_SPEC_COST", "1"},
         };
+    } else if (mj == 7 && mn == 5) {
+        // Turing (RTX 20, Quadro RTX, Tesla T4 / T10): the whole bitwise kernel series of sm75_series.hpp, which was opt-in while no
+        // one on the project had a 7.5 card.  Tesla T4 (70 W) in a Proxmox VM on a 2 x Xeon 8276L, Qwen3.8-Flash-Next Q2_0, setup's
+        // config, CUDA 13.1, 8 interleaved pairs of fresh engines (tools/ab_engine.py): decode +20..+27% (paired medians of the 4
+        // requests; 30 of 32 pairs faster), the 6K-token prompt read +4%.  Answers byte-identical with the series on and off, and with
+        // each of its 14 switches dropped in turn (STRATA_IQ_MT_MIN=1 --prompt-cache 0 --adapt-swaps 0 --pcie-frac 0, 3 rounds,
+        // tools/sm75_ablation.py).  STRATA_SM75_IL carries most of the gain; the other switches were within the T4's +-5% round-to-
+        // round noise, none measurably slower, so the table is the series as a whole (bench/results/2026-11-06-tesla-t4-sm75-table).
+        // New after 0.2.6, so STRATA_DEFAULTS=026 leaves it out, like STRATA_SM75_PERF=0.
+        if (off("STRATA_SM75_PERF") || defaults026) return t;
+        t = {{"STRATA_SM75_PERF", "1"}};
     }
     return t;
 }
 
-std::vector<std::string> apply_nv_defaults(int major, int minor) {
+NvTableNote nv_table_note(int major, int minor) {
     const int mj = strata::cc_major_of(major), mn = strata::cc_minor_of(minor);
+    if (mj == 8) return {"sm_86 (Ampere)", "STRATA_SM86_PERF", true, false};
+    if (mj == 12 && mn == 1) return {"sm_121 (GB10)", "STRATA_SM121_PERF", false, true};
+    if (mj == 7 && mn == 5) return {"sm_75 (Turing)", "STRATA_SM75_PERF", true, true};
+    return {"sm_60 (Pascal)", "STRATA_SM60_PERF", true, false};
+}
+
+std::vector<std::string> apply_nv_defaults(int major, int minor) {
     std::vector<std::string> set;
     for (const auto& kv : nv_default_env(major, minor)) {
         if (std::getenv(kv.first.c_str()) != nullptr) continue;   // the user's setting wins, whatever it is
@@ -96,14 +114,12 @@ std::vector<std::string> apply_nv_defaults(int major, int minor) {
         set.push_back(kv.first);
     }
     if (!set.empty()) {
-        const bool sm86 = mj == 8;
-        const bool sm121 = mj == 12 && mn == 1;
-        // sm_86 / sm_60: bit-exact switches.  sm_121: the fused prompt path and the FP4-activation NVFP4 prompt round differently from the
-        // paths they replace (24 of 24 greedy answers were identical on the Spark; no KL run), so the line does not say "exact".
+        // sm_86 / sm_60 / sm_75: bit-exact switches.  sm_121: the fused prompt path and the FP4-activation NVFP4 prompt round differently
+        // from the paths they replace (24 of 24 greedy answers were identical on the Spark; no KL run), so the line does not say "exact".
+        const NvTableNote note = nv_table_note(major, minor);
         std::fprintf(stderr, "strata: %s: %zu %sspeed switches on by default (%s=0 turns them off%s; a switch you set is kept): ",
-                     sm86 ? "sm_86 (Ampere)" : sm121 ? "sm_121 (GB10)" : "sm_60 (Pascal)", set.size(), sm121 ? "" : "exact ",
-                     sm86 ? "STRATA_SM86_PERF" : sm121 ? "STRATA_SM121_PERF" : "STRATA_SM60_PERF",
-                     sm121 ? ", as does STRATA_DEFAULTS=026" : "");
+                     note.card, set.size(), note.exact ? "exact " : "", note.off_switch,
+                     note.off_by_026 ? ", as does STRATA_DEFAULTS=026" : "");
         for (size_t i = 0; i < set.size(); ++i) std::fprintf(stderr, "%s%s", i ? " " : "", set[i].c_str() + 7);
         std::fprintf(stderr, "\n");
     }

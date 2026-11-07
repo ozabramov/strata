@@ -1,0 +1,1 @@
+strata: sm_75 (Turing): 1 exact speed switches on by default (STRATA_SM75_PERF=0 turns them off, as does STRATA_DEFAULTS=026; a switch you set is kept): SM75_PERF

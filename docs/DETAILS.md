@@ -13,7 +13,7 @@ engine and is covered in [MODELS.md](MODELS.md); nothing below applies to it unl
 > [Windows](#windows) · [Linux](#linux) · [Memory modes](#memory-modes) · [Sharing the GPU](#sharing-the-gpu-with-other-programs-optional) ·
 > [API](#using-it) · [MCP tools](#tools-from-mcp-servers) · [MCP server](#manage-strata-from-your-ai-assistant-mcp-server) ·
 > [Images](#images-vision) · [Speed settings](#speed-settings) · [CPU workers](#cpu-workers-and-thread-placement) ·
-> [Per-card defaults](#rtx-30-series-sm_86-and-tesla-p100-sm_60-bitwise-decode-switches-on-by-default) ·
+> [Per-card defaults](#rtx-30-series-sm_86-tesla-p100-sm_60-and-turing-sm_75-bitwise-decode-switches-on-by-default) ·
 > [Troubleshooting](#troubleshooting) · [How it works](#how-it-works) · [Credits](#credits-and-licenses) ·
 > [History](#history--older-measurements)
 
@@ -1053,7 +1053,7 @@ bits of the answer: a switch that changes rounding can change a greedy answer at
 | Bare `--prefill auto` takes 32768-token chunks (16384 up to 0.2.10) | gfx12, Linux, one card | `STRATA_GFX12_CHUNK=0` (8192) or `=16` (16384), or `STRATA_GFX12_DEFAULTS=0` | An explicit `--prefill N`, `auto:N` or `STRATA_PREFILL_AUTO_MAX` is untouched. A 20K prompt is one chunk instead of 16384 + a tail (R9700, IQ3_S: 20K +12%, 32K +1.3%, 64K +2.6%; UD-Q4_K_XL 20K +26%); first-token KL against 16384 is at most 5e-5. The loan of cache slots is taken only for what a prompt needs; when the RAM left does not cover it the ceiling steps down to 16384, then 8192. |
 | K-quant experts read the prompt on MMQ | gfx12, Linux: UD-Q4/Q5/Q6_K_XL files (Q4_K, Q5_K, Q5_1, Q6_K experts) | `STRATA_MMQ_KQ=0` or `STRATA_GFX12_DEFAULTS=0` | Instead of dequantizing the experts to FP16 for hipBLASLt (R9700, UD-Q4_K_XL: prompt 4K +10%, 8K +14%, 32K +17%). It rounds differently: first-token KL against the FP16 path about 0.03. Models without K-quant experts never read it. |
 | gfx12 prompt staging ring | gfx12, Linux | `STRATA_GFX12_RING=0` or `STRATA_PREFILL_RING=96` | 256 slots below ~6K-token chunks, 192 up to 12K, 96 above (was 96): prompt 4K +16%, 2K +2%, 8K +3% on an R9700; bit-identical. |
-| Per-architecture bitwise sets | sm_86, sm_60, sm_120 | See [below](#rtx-30-series-sm_86-and-tesla-p100-sm_60-bitwise-decode-switches-on-by-default) | |
+| Per-architecture bitwise sets | sm_86, sm_60, sm_75, sm_120 | See [below](#rtx-30-series-sm_86-tesla-p100-sm_60-and-turing-sm_75-bitwise-decode-switches-on-by-default) | |
 | `STRATA_ADAPT_CALLBACK_WARMUP` | Linux | `=0` | Starts the GPU host-callback thread before the CPU pool pins the host thread. |
 | `STRATA_ADAPT_SIGNAL` | CUDA | `host` / `copy` | The overlap's per-layer "landed" signal is a stream-ordered copy into pinned memory on Linux and a host function on Windows. |
 | `--ple-io direct` | all | `--ple-io ram` or `mmap` | The n-gram table is read unbuffered from the SSD. A startup probe warns when direct reads are slow (under 15K rows/s) but never switches by itself. `STRATA_PLE_AUTO_MMAP=1` brings back the automatic switch to `mmap`. On a rotational disk setup adds `--ple-io ram` when the RAM holds the table. |
@@ -1132,11 +1132,13 @@ streamed for a 2K prompt and 4% fewer at 32K (8,192-token chunks); a 1,790-token
 conversation took 18% less time and fresh 2K, 4K and 32K reads ran 20%, 8% and 5% faster (4 pairs), with byte-identical
 replies in a deterministic lane at 1K to 32K.
 
-### RTX 20 (Turing, sm_75) kernels (opt-in)
+### RTX 20 and Tesla T4 (Turing, sm_75) kernels
 
 Kernels by rafatxf (#2069-#2072, #2093, #2220-#2222), imanu86 (#2081) and xrip (#1821) for compute capability 7.5 are bitwise
-equal to the ones they replace. Nobody on the team has an sm_75 card to confirm them, so they are off until asked for.
-`STRATA_SM75_PERF=1` turns on every bitwise Turing kernel on a 7.5 card (no other card is affected). Each has its own variable
+equal to the ones they replace. They were opt-in until a Tesla T4 confirmed them: the same answers byte for byte with the series
+on, off, and with each switch dropped in turn, and faster decode ([the sm_75 table](#rtx-30-series-sm_86-tesla-p100-sm_60-and-turing-sm_75-bitwise-decode-switches-on-by-default)).
+`STRATA_SM75_PERF=1` turns on every bitwise Turing kernel on a 7.5 card (no other card is affected); it is the default when every
+card is a 7.5, and `STRATA_SM75_PERF=0` or `STRATA_DEFAULTS=026` turns it off. Each has its own variable
 that wins in both directions: `STRATA_SM75_IL`, `STRATA_SM75_EXP`, `STRATA_GR_UP75` / `STRATA_GR_DOWN_TG`, `STRATA_SCORES_HALVE`,
 `STRATA_TOPK_SPLIT`, `STRATA_TOPK_SAMPLE`, `STRATA_ATTN_V3`, `STRATA_Q2_WARP`, `STRATA_FUSE_WAIT=2`, `STRATA_QIL`,
 `STRATA_TC_SM75`, `STRATA_PA_V1_PREFETCH`, `STRATA_SCORES_THREAD` (a thread-per-head block scorer; `=1` works on any CUDA card).
@@ -1274,7 +1276,7 @@ off, the output is token for token the stock model's.
 
 ---
 
-## RTX 30 series (sm_86) and Tesla P100 (sm_60): bitwise decode switches on by default
+## RTX 30 series (sm_86), Tesla P100 (sm_60) and Turing (sm_75): bitwise decode switches on by default
 
 Switches that are bit-exact on every card are on by default per architecture (`include/strata/core/nv_defaults.hpp`, set before
 the engine reads its switches; a switch you set yourself, to anything, is kept). The table is used when every visible card has
@@ -1285,6 +1287,15 @@ that one compute capability. The identity gate (10 prompts plus exact_pp 4K/20K,
 | sm_86 (RTX 3050-3090, RTX A2000-A6000) | `STRATA_ADAPT_NOWAIT=1`, `STRATA_ADAPT_LAG=2`, `STRATA_CPU_IQ_ALL_EXACT1=1`, `STRATA_SIDE_MIXER=2`, `STRATA_ATTN_DAILY=1`, `STRATA_GR_UP75=1`, `STRATA_GU_SWIGLU=1`, `STRATA_QSA_ROWS=1`, `STRATA_B6_MMVQ_ROWS=1` | `STRATA_SM86_PERF=0` |
 | sm_60 (Tesla P100) | `STRATA_ADAPT_NOWAIT=1`, `STRATA_ADAPT_LAG=2`, `STRATA_SIDE_MIXER=2`, `STRATA_FUSE_WAIT=2`, `STRATA_B6_MMVQ_ROWS=1`, `STRATA_FUSE_DECODE=1`, `STRATA_GR_UP75=1` | `STRATA_SM60_PERF=0` |
 | sm_120 (RTX 50 and RTX PRO Blackwell) | `STRATA_SIDE_MIXER=2`, `STRATA_ATTN_DAILY=1`, `STRATA_GR_UP75=1`, `STRATA_GR_DOWN_TG=1`, `STRATA_GU_SWIGLU=1` | `STRATA_SM120_PERF=0` |
+| sm_75 (RTX 20, Quadro RTX, Tesla T4 / T10) | `STRATA_SM75_PERF=1`: the whole [Turing kernel series](#rtx-20-and-tesla-t4-turing-sm_75-kernels) | `STRATA_SM75_PERF=0` (also `STRATA_DEFAULTS=026`) |
+
+The sm_75 table was measured on one Tesla T4 (70 W) in a Proxmox VM on a 2 x Xeon Platinum 8276L, Qwen3.8-Flash-Next Q2_0 with
+setup's config, CUDA 13.1: decode +20 to +27% (paired medians of four requests over 8 interleaved pairs of fresh engines, 30 of 32
+pairs faster) and the 6K-token prompt read +4%. Its identity check is not the gate above but `tools/ab_engine.py`'s full-answer
+hashes in the deterministic lane (`STRATA_IQ_MT_MIN=1 --prompt-cache 0 --adapt-swaps 0 --pcie-frac 0`): four greedy requests
+byte-identical with the series on and off, and with each of its 14 switches dropped in turn (`tools/sm75_ablation.py`).
+`STRATA_SM75_IL` carries most of the gain; the others were within the card's round-to-round noise and none was measurably
+slower. Runs and logs: [bench/results/2026-11-06-tesla-t4-sm75-table](../bench/results/2026-11-06-tesla-t4-sm75-table/README.md).
 
 `STRATA_ADAPT_OVERLAP=1` does not run beside `STRATA_ADAPT_LAG` / `STRATA_ADAPT_NOWAIT`: set `STRATA_ADAPT_LAG=1
 STRATA_ADAPT_NOWAIT=0` with it. Switches that did not pay or were mixed are left out of every set: `STRATA_EXPDEC`,

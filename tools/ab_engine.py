@@ -7,10 +7,13 @@ every other key is set in the engine's environment.  Each round starts the serve
 answer, then sends the same requests: greedy, fixed prompts, a short chat set and one long prompt.  Prints the
 server's own timings (llama.cpp's `timings`: decode and prompt tokens per second) per request and the per-arm
 medians.  Decode numbers move run to run (the adaptive expert tier, the OS), so compare medians over rounds.
+Each answer's SHA-256 goes into the log, and the summary says per request whether every arm and round gave the same
+answer (IDENTICAL), which arms answered differently from the first arm, and which changed between their own rounds.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import random
@@ -36,6 +39,33 @@ def long_prompt(words: int) -> str:
              "ledger quartz meadow anchor violet thunder").split()
     body = " ".join(rng.choice(vocab) for _ in range(words))
     return f"Here is a list of words:\n{body}\n\nSummarize what kinds of words appear in the list, in five sentences."
+
+
+def parse_arm(spec: str) -> tuple[str, dict[str, str]]:
+    """NAME:key=value,... -> (NAME, {key: value}); NAME or NAME: alone is an arm with no settings."""
+    name, _, kv = spec.partition(":")
+    return name, dict(x.split("=", 1) for x in kv.split(",") if x)
+
+
+def answer_digest(text: str) -> str:
+    """SHA-256 of the whole answer (the log's `text` keeps only its first 80 characters)."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def identity_report(hashes_by_arm: dict[str, list[str]]) -> str:
+    """One line on whether the arms gave the same answer to one request, the first arm's first answer as reference."""
+    first = next(iter(hashes_by_arm), None)
+    if first is None or not hashes_by_arm[first]:
+        return "no answers"
+    ref = hashes_by_arm[first][0]
+    unstable = [n for n, hs in hashes_by_arm.items() if len(set(hs)) > 1]
+    differs = [n for n, hs in hashes_by_arm.items() if hs and n not in unstable and hs[0] != ref]
+    parts = []
+    if differs:
+        parts.append(f"differs from {first}: " + ", ".join(differs))
+    if unstable:
+        parts.append("unstable: " + ", ".join(unstable))
+    return "; ".join(parts) or "IDENTICAL"
 
 
 def post(port: int, prompt: str, max_tokens: int) -> dict:
@@ -64,7 +94,7 @@ def wait_ready(port: int, proc: subprocess.Popen, timeout: float = 1800) -> None
     raise TimeoutError("server not ready")
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("config")
     ap.add_argument("arms", nargs="+")
@@ -73,13 +103,9 @@ def main() -> int:
     ap.add_argument("--max-new", type=int, default=256)
     ap.add_argument("--long-words", type=int, default=6000)
     ap.add_argument("--log", default="ab_engine.jsonl")
-    a = ap.parse_args()
+    a = ap.parse_args(argv)
     base = json.loads(Path(a.config).read_text())
-    arms = []
-    for s in a.arms:
-        name, _, kv = s.partition(":")
-        env = dict(x.split("=", 1) for x in kv.split(",") if x)
-        arms.append((name, env))
+    arms = [parse_arm(s) for s in a.arms]
     reqs = [(f"chat{i}", p) for i, p in enumerate(PROMPTS)] + [("long", long_prompt(a.long_words))]
     out = open(a.log, "a")
     res: dict = {n: {} for n, _ in arms}
@@ -107,10 +133,11 @@ def main() -> int:
                 for tag, p in reqs:
                     r = post(a.port, p, a.max_new)
                     t = r.get("timings", {})
+                    text = r["choices"][0]["message"].get("content") or ""
                     row = {"round": rnd, "arm": name, "req": tag, "decode": t.get("predicted_per_second"),
                            "prompt": t.get("prompt_per_second"), "prompt_n": t.get("prompt_n"),
                            "n": r.get("usage", {}).get("completion_tokens"),
-                           "text": r["choices"][0]["message"].get("content", "")[:80]}
+                           "text": text[:80], "sha256": answer_digest(text), "chars": len(text)}
                     out.write(json.dumps(row) + "\n")
                     out.flush()
                     res[name].setdefault(tag, []).append(row)
@@ -132,6 +159,10 @@ def main() -> int:
             pr = statistics.median([x["prompt"] for x in rows if x["prompt"]]) if rows else float("nan")
             cells.append(f"{name}: decode {d:6.1f}  prompt {pr:7.1f}")
         print(f"  {tag:6s} | " + " | ".join(cells))
+    print("\nanswers (greedy, every round):")
+    for tag, _ in reqs:
+        hashes = {name: [x["sha256"] for x in res[name].get(tag, [])] for name, _ in arms}
+        print(f"  {tag:6s} | {identity_report(hashes)}")
     return 0
 
 
