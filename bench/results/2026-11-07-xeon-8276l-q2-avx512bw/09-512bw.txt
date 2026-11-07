@@ -1,0 +1,103 @@
+round 0 avx2: ready in 19 s
+  chat0  decode 50.4 tok/s  prompt 48.7 tok/s (34)  n 256
+  chat1  decode 35.2 tok/s  prompt 43.7 tok/s (27)  n 219
+  chat2  decode 32.1 tok/s  prompt 41.8 tok/s (29)  n 184
+  long   decode 32.6 tok/s  prompt 542.5 tok/s (6345)  n 154
+round 0 bw: ready in 22 s
+  chat0  decode 58.0 tok/s  prompt 41.6 tok/s (34)  n 256
+  chat1  decode 40.7 tok/s  prompt 38.9 tok/s (27)  n 207
+  chat2  decode 38.1 tok/s  prompt 33.9 tok/s (29)  n 174
+  long   decode 30.1 tok/s  prompt 488.6 tok/s (6345)  n 131
+round 0 bw_bf16: ready in 22 s
+  chat0  decode 48.6 tok/s  prompt 39.6 tok/s (34)  n 256
+  chat1  decode 35.3 tok/s  prompt 36.4 tok/s (27)  n 207
+  chat2  decode 32.9 tok/s  prompt 35.4 tok/s (29)  n 174
+  long   decode 31.3 tok/s  prompt 610.6 tok/s (6345)  n 153
+round 1 bw_bf16: ready in 22 s
+  chat0  decode 46.2 tok/s  prompt 38.3 tok/s (34)  n 256
+  chat1  decode 33.6 tok/s  prompt 37.0 tok/s (27)  n 232
+  chat2  decode 31.5 tok/s  prompt 35.4 tok/s (29)  n 186
+  long   decode 28.5 tok/s  prompt 588.4 tok/s (6345)  n 112
+round 1 bw: ready in 22 s
+  chat0  decode 55.1 tok/s  prompt 40.2 tok/s (34)  n 256
+  chat1  decode 36.7 tok/s  prompt 42.5 tok/s (27)  n 207
+  chat2  decode 32.6 tok/s  prompt 40.6 tok/s (29)  n 184
+  long   decode 30.6 tok/s  prompt 441.6 tok/s (6345)  n 153
+round 1 avx2: ready in 22 s
+  chat0  decode 56.6 tok/s  prompt 49.4 tok/s (34)  n 256
+  chat1  decode 38.2 tok/s  prompt 47.5 tok/s (27)  n 237
+  chat2  decode 36.9 tok/s  prompt 49.6 tok/s (29)  n 176
+  long   decode 29.7 tok/s  prompt 447.7 tok/s (6345)  n 141
+round 2 avx2: ready in 22 s
+  chat0  decode 46.2 tok/s  prompt 46.6 tok/s (34)  n 256
+  chat1  decode 32.4 tok/s  prompt 41.5 tok/s (27)  n 219
+  chat2  decode 32.2 tok/s  prompt 39.7 tok/s (29)  n 202
+  long   decode 27.2 tok/s  prompt 448.2 tok/s (6345)  n 121
+round 2 bw: ready in 19 s
+  chat0  decode 48.0 tok/s  prompt 47.2 tok/s (34)  n 256
+  chat1  decode 33.9 tok/s  prompt 43.0 tok/s (27)  n 237
+  chat2  decode 31.4 tok/s  prompt 41.2 tok/s (29)  n 174
+  long   decode 30.7 tok/s  prompt 452.0 tok/s (6345)  n 153
+round 2 bw_bf16: ready in 22 s
+  chat0  decode 53.3 tok/s  prompt 40.4 tok/s (34)  n 256
+  chat1  decode 37.3 tok/s  prompt 38.6 tok/s (27)  n 207
+  chat2  decode 33.8 tok/s  prompt 37.4 tok/s (29)  n 208
+  long   decode 30.2 tok/s  prompt 606.2 tok/s (6345)  n 107
+round 3 bw_bf16: ready in 22 s
+  chat0  decode 52.7 tok/s  prompt 47.7 tok/s (34)  n 256
+  chat1  decode 36.5 tok/s  prompt 46.1 tok/s (27)  n 232
+  chat2  decode 33.5 tok/s  prompt 43.9 tok/s (29)  n 201
+  long   decode 27.5 tok/s  prompt 611.5 tok/s (6345)  n 111
+round 3 bw: ready in 22 s
+  chat0  decode 55.0 tok/s  prompt 40.5 tok/s (34)  n 256
+  chat1  decode 37.5 tok/s  prompt 38.6 tok/s (27)  n 207
+  chat2  decode 33.5 tok/s  prompt 40.2 tok/s (29)  n 184
+  long   decode 31.3 tok/s  prompt 447.2 tok/s (6345)  n 133
+round 3 avx2: ready in 22 s
+  chat0  decode 45.5 tok/s  prompt 38.4 tok/s (34)  n 256
+  chat1  decode 34.0 tok/s  prompt 35.5 tok/s (27)  n 202
+  chat2  decode 33.8 tok/s  prompt 35.0 tok/s (29)  n 199
+  long   decode 29.6 tok/s  prompt 441.4 tok/s (6345)  n 119
+round 4 avx2: ready in 19 s
+  chat0  decode 46.8 tok/s  prompt 38.8 tok/s (34)  n 256
+  chat1  decode 34.7 tok/s  prompt 34.5 tok/s (27)  n 237
+  chat2  decode 32.2 tok/s  prompt 32.7 tok/s (29)  n 174
+  long   decode 29.2 tok/s  prompt 444.9 tok/s (6345)  n 128
+round 4 bw: ready in 22 s
+  chat0  decode 47.0 tok/s  prompt 33.6 tok/s (34)  n 256
+  chat1  decode 33.8 tok/s  prompt 32.6 tok/s (27)  n 237
+  chat2  decode 32.2 tok/s  prompt 36.2 tok/s (29)  n 174
+  long   decode 32.9 tok/s  prompt 447.0 tok/s (6345)  n 153
+round 4 bw_bf16: ready in 22 s
+  chat0  decode 47.3 tok/s  prompt 38.6 tok/s (34)  n 256
+  chat1  decode 34.4 tok/s  prompt 35.2 tok/s (27)  n 237
+  chat2  decode 31.8 tok/s  prompt 35.5 tok/s (29)  n 174
+  long   decode 30.2 tok/s  prompt 603.4 tok/s (6345)  n 107
+round 5 bw_bf16: ready in 22 s
+  chat0  decode 51.4 tok/s  prompt 47.9 tok/s (34)  n 256
+  chat1  decode 36.2 tok/s  prompt 44.2 tok/s (27)  n 232
+  chat2  decode 32.3 tok/s  prompt 43.2 tok/s (29)  n 174
+  long   decode 29.5 tok/s  prompt 610.7 tok/s (6345)  n 109
+round 5 bw: ready in 22 s
+  chat0  decode 52.2 tok/s  prompt 47.7 tok/s (34)  n 256
+  chat1  decode 36.5 tok/s  prompt 45.6 tok/s (27)  n 232
+  chat2  decode 34.4 tok/s  prompt 44.5 tok/s (29)  n 201
+  long   decode 29.7 tok/s  prompt 446.7 tok/s (6345)  n 115
+round 5 avx2: ready in 22 s
+  chat0  decode 49.3 tok/s  prompt 47.7 tok/s (34)  n 256
+  chat1  decode 35.0 tok/s  prompt 43.1 tok/s (27)  n 237
+  chat2  decode 30.6 tok/s  prompt 41.0 tok/s (29)  n 176
+  long   decode 28.0 tok/s  prompt 447.0 tok/s (6345)  n 118
+
+medians over rounds:
+  chat0  | avx2: decode   48.0  prompt    47.2 | bw: decode   53.6  prompt    41.0 | bw_bf16: decode   50.0  prompt    40.0
+  chat1  | avx2: decode   34.9  prompt    42.3 | bw: decode   36.6  prompt    40.7 | bw_bf16: decode   35.8  prompt    37.8
+  chat2  | avx2: decode   32.2  prompt    40.4 | bw: decode   33.0  prompt    40.4 | bw_bf16: decode   32.6  prompt    36.5
+  long   | avx2: decode   29.4  prompt   447.4 | bw: decode   30.6  prompt   447.1 | bw_bf16: decode   29.9  prompt   608.4
+
+answers (greedy, every round):
+  chat0  | differs from avx2: bw, bw_bf16
+  chat1  | unstable: avx2, bw, bw_bf16
+  chat2  | unstable: avx2, bw, bw_bf16
+  long   | unstable: avx2, bw, bw_bf16
+EXIT=0
